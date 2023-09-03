@@ -14,7 +14,7 @@ import common.Constants;
 import common.Queries;
 import dto.ClientDTO;
 import entity.Client;
-import factory.ServiceFactory;
+import factory.DaoFactory;
 import handler.CustomSQLException;
 import utils.CSVReader;
 
@@ -24,7 +24,7 @@ public class ClientDao{
 	
 	public List<Client> getAll(){
 		
-		Connection conn = ServiceFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
+		Connection conn = DaoFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
 		ArrayList<Client> clients = new ArrayList<>();
 		try {
 			Statement stmn = conn.createStatement();
@@ -44,7 +44,7 @@ public class ClientDao{
 
 	public Client getById(int id){
 		
-		Connection conn = ServiceFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
+		Connection conn = DaoFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
 		Client client = new Client();
 		try {
 			PreparedStatement stmn = DaoHelper.getPreparedStatement(conn, Queries.GET_CLIENT);
@@ -64,7 +64,7 @@ public class ClientDao{
 
 	public void insert(int id, String name, String email){
 		
-		Connection conn = ServiceFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
+		Connection conn = DaoFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
 		try {
 			PreparedStatement stmn = DaoHelper.getPreparedStatement(conn, Queries.INSERT_CLIENT);
 			stmn.setInt(1, id);
@@ -91,7 +91,7 @@ public class ClientDao{
 
 	public Client modify(int oldId, int newId, String name, String email){
 		
-		Connection conn = ServiceFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
+		Connection conn = DaoFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
 		Client client = new Client();
 		try {
 			PreparedStatement stmn = DaoHelper.getPreparedStatement(conn, Queries.MODIFY_CLIENT);
@@ -116,7 +116,7 @@ public class ClientDao{
 
 	public void deleteById(int id){
 		
-		Connection conn = ServiceFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
+		Connection conn = DaoFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
 		try {
 			PreparedStatement stmn = DaoHelper.getPreparedStatement(conn, Queries.DELETE_CLIENT);
 			stmn.setInt(1, id);
@@ -129,7 +129,7 @@ public class ClientDao{
 	
 	public List<ClientDTO> getClientsOrderByReceiptQuantity(){
 		
-		Connection conn = ServiceFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
+		Connection conn = DaoFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
 		List<ClientDTO> result = new ArrayList<>();
 		try {
 			Statement stmn = conn.createStatement();

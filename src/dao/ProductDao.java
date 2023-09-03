@@ -14,7 +14,7 @@ import common.Constants;
 import common.Queries;
 import dto.ProductDTO;
 import entity.Product;
-import factory.ServiceFactory;
+import factory.DaoFactory;
 import handler.CustomSQLException;
 import utils.CSVReader;
 
@@ -24,7 +24,7 @@ public class ProductDao{
 	
 	public List<Product> getAll() {
 		
-		Connection conn = ServiceFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
+		Connection conn = DaoFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
 		ArrayList<Product> products = new ArrayList<>();
 		try {
 			Statement stmn = conn.createStatement();
@@ -44,7 +44,7 @@ public class ProductDao{
 
 	public Product getById(int id){
 		
-		Connection conn = ServiceFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
+		Connection conn = DaoFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
 		Product product = new Product();
 		try {
 			PreparedStatement stmn = DaoHelper.getPreparedStatement(conn, Queries.GET_PRODUCT);
@@ -64,7 +64,7 @@ public class ProductDao{
 
 	public void insert(int id, String name, float value){
 		
-		Connection conn = ServiceFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
+		Connection conn = DaoFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
 		try {
 			PreparedStatement stmn = DaoHelper.getPreparedStatement(conn, Queries.INSERT_PRODUCT);
 			stmn.setInt(1, id);
@@ -91,7 +91,7 @@ public class ProductDao{
 
 	public Product modify(int oldId, int newId, String name, float value){
 		
-		Connection conn = ServiceFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
+		Connection conn = DaoFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
 		Product product = new Product();
 		try {
 			PreparedStatement stmn = DaoHelper.getPreparedStatement(conn, Queries.MODIFY_PRODUCT);
@@ -116,7 +116,7 @@ public class ProductDao{
 
 	public void deleteById(int id){
 		
-		Connection conn = ServiceFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
+		Connection conn = DaoFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
 		try {
 			PreparedStatement stmn = DaoHelper.getPreparedStatement(conn, Queries.DELETE_PRODUCT);
 			stmn.setInt(1, id);
@@ -128,7 +128,7 @@ public class ProductDao{
 	
 	public ProductDTO getHigherMoneyCollectedProduct(){
 		
-		Connection conn = ServiceFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
+		Connection conn = DaoFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
 		ProductDTO product = new ProductDTO();
 		try {
 			Statement stmn = conn.createStatement();

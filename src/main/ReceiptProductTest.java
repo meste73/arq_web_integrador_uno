@@ -4,42 +4,42 @@ import java.util.List;
 
 import common.Constants;
 import entity.ReceiptProduct;
-import factory.ServiceFactory;
+import factory.DaoFactory;
 
 public class ReceiptProductTest {
 	
-	private ServiceFactory serviceFactory;	
+	private DaoFactory daoFactory;	
 	
 	public ReceiptProductTest() {
-		this.serviceFactory = ServiceFactory.getServiceFactory("postgres");
+		this.daoFactory = DaoFactory.getDaoFactory("postgres");
 	}
 	
 	public void printAllReceiptProducts() {
 		List<ReceiptProduct> receiptProducts;
-		receiptProducts = this.serviceFactory.getReceiptProductDao().getAll();
+		receiptProducts = this.daoFactory.getReceiptProductDao().getAll();
 		for(ReceiptProduct r: receiptProducts) {
 			System.out.println(r);
 		}
 	}
 	
 	public void printReceiptProduct(int receiptId, int productId) {
-		System.out.println(this.serviceFactory.getReceiptProductDao().getById(receiptId, productId));
+		System.out.println(this.daoFactory.getReceiptProductDao().getById(receiptId, productId));
 	}
 	
 	public void insertReceiptProductsFromCsvFile(String path, String[] headers) {
-		this.serviceFactory.getReceiptProductDao().insertFromCsvFile(path, headers);
+		this.daoFactory.getReceiptProductDao().insertFromCsvFile(path, headers);
 	}
 	
 	public void insertReceiptProduct(int receiptId, int productId, int quantity) {
-		this.serviceFactory.getReceiptProductDao().insert(receiptId, productId, quantity);
+		this.daoFactory.getReceiptProductDao().insert(receiptId, productId, quantity);
 	}
 	
 	public ReceiptProduct modifyReceiptProduct(int receiptId, int newReceiptId, int productId, int newProductId, int quantity) {
-		return this.serviceFactory.getReceiptProductDao().modify(receiptId, newReceiptId, productId, newProductId, quantity);
+		return this.daoFactory.getReceiptProductDao().modify(receiptId, newReceiptId, productId, newProductId, quantity);
 	}
 	
 	public void deleteReceiptProduct(int receiptId, int productId) {
-		this.serviceFactory.getReceiptProductDao().deleteById(receiptId, productId);
+		this.daoFactory.getReceiptProductDao().deleteById(receiptId, productId);
 	}
 	
 	public void run() {

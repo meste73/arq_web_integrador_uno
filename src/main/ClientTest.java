@@ -5,47 +5,47 @@ import java.util.List;
 import common.Constants;
 import dto.ClientDTO;
 import entity.Client;
-import factory.ServiceFactory;
+import factory.DaoFactory;
 
 public class ClientTest {
 	
-	private ServiceFactory serviceFactory;
+	private DaoFactory daoFactory;
 	
 	public ClientTest() {
-		this.serviceFactory = ServiceFactory.getServiceFactory("postgres");
+		this.daoFactory = DaoFactory.getDaoFactory("postgres");
 	}
 	
 	public void printAllClients() {
 		List<Client> clients;
-		clients = this.serviceFactory.getClientDao().getAll();
+		clients = this.daoFactory.getClientDao().getAll();
 		for(Client c: clients) {
 			System.out.println(c);
 		}
 	}
 	
 	public void printClient(int id) {
-		System.out.println(this.serviceFactory.getClientDao().getById(50));
+		System.out.println(this.daoFactory.getClientDao().getById(50));
 	}
 	
 	public void insertClientsFromCsvFile(String path, String[] headers) {
-		this.serviceFactory.getClientDao().insertFromCsvFile(path, headers);
+		this.daoFactory.getClientDao().insertFromCsvFile(path, headers);
 	}
 	
 	public void insertClient(int id, String name, String email) {
-		this.serviceFactory.getClientDao().insert(id, name, email);
+		this.daoFactory.getClientDao().insert(id, name, email);
 	}
 	
 	public Client modifyClient(int id, int newId, String name, String email) {
-		return this.serviceFactory.getClientDao().modify(id, newId, name, email);
+		return this.daoFactory.getClientDao().modify(id, newId, name, email);
 	}
 	
 	public void deleteClient(int id) {
-		this.serviceFactory.getClientDao().deleteById(id);
+		this.daoFactory.getClientDao().deleteById(id);
 	}
 	
 	public void printClientsOrderByReceiptQuantity() {
-		System.out.println("Clientes ordenados segun cantidad de facturas:\n");
-		List<ClientDTO> rClient = this.serviceFactory.getClientDao().getClientsOrderByReceiptQuantity();
+		System.out.println("Clientes ordenados descendentemente segun monto facturado:\n");
+		List<ClientDTO> rClient = this.daoFactory.getClientDao().getClientsOrderByReceiptQuantity();
 		if(rClient != null) {
 			for(ClientDTO r: rClient) {
 				System.out.println(r);

@@ -9,17 +9,17 @@ import dao.ProductDao;
 import dao.ReceiptDao;
 import dao.ReceiptProductDao;
 
-public abstract class ServiceFactory {
+public abstract class DaoFactory {
 	
-	private static PostgresServiceFactory postgresServiceFactory;
+	private static PostgresDaoFactory postgresDaoFactory;
 	private static Connection conn;
 	
-	public static ServiceFactory getServiceFactory(String dataBase) {
+	public static DaoFactory getDaoFactory(String dataBase) {
 		if(dataBase == "postgres") {
-			if(postgresServiceFactory == null) {
-				postgresServiceFactory = new PostgresServiceFactory();
+			if(postgresDaoFactory == null) {
+				postgresDaoFactory = new PostgresDaoFactory();
 			}
-			return postgresServiceFactory;			
+			return postgresDaoFactory;			
 		}
 		return null;
 	}

@@ -1,7 +1,7 @@
 package main;
 
 import common.Queries;
-import factory.ServiceFactory;
+import factory.DaoFactory;
 
 public class App {
 	
@@ -37,12 +37,12 @@ public class App {
 		clTest.printClientsOrderByReceiptQuantity();
 		prTest.printHigherMoneyCollectedProduct();
 		
-		ServiceFactory.closeConnection();
+		DaoFactory.closeConnection();
 
 	}
 	
 	private static void createTables(String[] queries) {
-		ServiceFactory serviceFactory = ServiceFactory.getServiceFactory("postgres");
+		DaoFactory serviceFactory = DaoFactory.getDaoFactory("postgres");
 		for(int i = 0; i < queries.length; i++) {
 			serviceFactory.createTable(queries[i]);			
 		}

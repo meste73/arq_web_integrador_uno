@@ -77,11 +77,13 @@ public class Queries {
 			+ "GROUP BY rec.product_id, pro.value, pro.name "
 			+ "ORDER BY \"Valor total\" DESC "
 			+ "LIMIT 1;";
-	
-	public static final String GET_CLIENTS_ORDER_BY_RECEIPT_QUANTITY_DESC = "SELECT cli.*, "
-			+ "COUNT(rec.receipt_id) AS \"Cantidad facturas\" "
-			+ "FROM client cli "
-			+ "JOIN receipt rec ON cli.client_id = rec.client_id "
-			+ "GROUP BY cli.client_id, cli.name, cli.email "
-			+ "ORDER BY \"Cantidad facturas\" DESC;";
+
+	public static final String GET_CLIENTS_ORDER_BY_RECEIPT_QUANTITY_DESC = "SELECT c.*, "
+			+ "SUM(rp.quantity*p.value) as amount "
+			+ "FROM client c "
+			+ "JOIN receipt r ON r.client_id = c.client_id "
+			+ "JOIN receipt_product rp ON rp.receipt_id = r.receipt_id "
+			+ "JOIN product p ON p.product_id = rp.product_id "
+			+ "GROUP BY c.client_id, c.name, c.email "
+			+ "ORDER BY amount DESC;";
 }

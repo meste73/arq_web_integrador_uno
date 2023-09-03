@@ -13,7 +13,7 @@ import org.apache.commons.csv.CSVRecord;
 import common.Constants;
 import common.Queries;
 import entity.ReceiptProduct;
-import factory.ServiceFactory;
+import factory.DaoFactory;
 import handler.CustomSQLException;
 import utils.CSVReader;
 
@@ -23,7 +23,7 @@ public class ReceiptProductDao{
 	
 	public List<ReceiptProduct> getAll() {
 		
-		Connection conn = ServiceFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
+		Connection conn = DaoFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
 		List<ReceiptProduct> receiptProducts = new ArrayList<>();
 		try {
 			Statement stmn = conn.createStatement();
@@ -45,7 +45,7 @@ public class ReceiptProductDao{
 
 	public ReceiptProduct getById(int receiptId, int productId){
 		
-		Connection conn = ServiceFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
+		Connection conn = DaoFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
 		ReceiptProduct receiptProduct = new ReceiptProduct();
 		try {
 			PreparedStatement stmn = DaoHelper.getPreparedStatement(conn, Queries.GET_RECEIPT_PRODUCT);
@@ -68,7 +68,7 @@ public class ReceiptProductDao{
 
 	public void insert(int receiptId, int productId, int quantity){
 		
-		Connection conn = ServiceFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
+		Connection conn = DaoFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
 		try {
 			PreparedStatement stmn = DaoHelper.getPreparedStatement(conn, Queries.INSERT_RECEIPT_PRODUCT);
 			stmn.setInt(1, receiptId);
@@ -99,7 +99,7 @@ public class ReceiptProductDao{
 							int newProductId, 
 							int quantity){
 		
-		Connection conn = ServiceFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
+		Connection conn = DaoFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
 		ReceiptProduct receiptProduct = new ReceiptProduct();
 		try {
 			PreparedStatement stmn = DaoHelper.getPreparedStatement(conn, Queries.MODIFY_RECEIPT_PRODUCT);
@@ -125,7 +125,7 @@ public class ReceiptProductDao{
 
 	public void deleteById(int receiptId, int productId){
 		
-		Connection conn = ServiceFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
+		Connection conn = DaoFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
 		try {
 			PreparedStatement stmn = DaoHelper.getPreparedStatement(conn, Queries.DELETE_RECEIPT_PRODUCT);
 			stmn.setInt(1, receiptId);

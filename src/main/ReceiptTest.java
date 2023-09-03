@@ -4,42 +4,42 @@ import java.util.List;
 
 import common.Constants;
 import entity.Receipt;
-import factory.ServiceFactory;
+import factory.DaoFactory;
 
 public class ReceiptTest {
 	
-	private ServiceFactory serviceFactory;
+	private DaoFactory daoFactory;
 	
 	public ReceiptTest() {
-		this.serviceFactory = ServiceFactory.getServiceFactory("postgres");
+		this.daoFactory = DaoFactory.getDaoFactory("postgres");
 	}
 	
 	public void printAllReceipts() {
 		List<Receipt> receipts;
-		receipts = this.serviceFactory.getReceiptDao().getAll();
+		receipts = this.daoFactory.getReceiptDao().getAll();
 		for(Receipt r: receipts) {
 			System.out.println(r);
 		}
 	}
 	
 	public void printReceipt(int id) {
-		System.out.println(this.serviceFactory.getReceiptDao().getById(id));
+		System.out.println(this.daoFactory.getReceiptDao().getById(id));
 	}
 	
 	public void insertReceiptsFromCsvFile(String path, String[] headers) {
-		this.serviceFactory.getReceiptDao().insertFromCsvFile(path, headers);
+		this.daoFactory.getReceiptDao().insertFromCsvFile(path, headers);
 	}
 	
 	public void insertReceipt(int receiptId, int clientId) {
-		this.serviceFactory.getReceiptDao().insert(receiptId, clientId);
+		this.daoFactory.getReceiptDao().insert(receiptId, clientId);
 	}
 	
 	public Receipt modifyReceipt(int receiptId, int newReceiptId, int clientId) {
-		return this.serviceFactory.getReceiptDao().modify(receiptId, newReceiptId, clientId);
+		return this.daoFactory.getReceiptDao().modify(receiptId, newReceiptId, clientId);
 	}
 	
 	public void deleteReceipt(int id) {
-		this.serviceFactory.getReceiptDao().deleteById(id);
+		this.daoFactory.getReceiptDao().deleteById(id);
 	}
 	
 	public void run() {

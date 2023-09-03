@@ -11,14 +11,14 @@ import dao.ReceiptDao;
 import dao.ReceiptProductDao;
 import handler.CustomSQLException;
 
-public class PostgresServiceFactory extends ServiceFactory{
+public class PostgresDaoFactory extends DaoFactory{
 	
 	private ClientDao clientDao;
 	private ProductDao productDao;
 	private ReceiptDao receiptDao;
 	private ReceiptProductDao receiptProductDao;
 	
-	protected PostgresServiceFactory() {
+	protected PostgresDaoFactory() {
 		this.clientDao = new ClientDao();
 		this.productDao = new ProductDao();
 		this.receiptDao = new ReceiptDao();
@@ -46,7 +46,7 @@ public class PostgresServiceFactory extends ServiceFactory{
 	}
 	
 	public void createTable(String query) {
-		Connection conn = ServiceFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
+		Connection conn = DaoFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
 		try {
 			PreparedStatement stmn = conn.prepareStatement(query);
 			if(!stmn.execute()) {
