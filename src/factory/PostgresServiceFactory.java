@@ -1,7 +1,6 @@
 package factory;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -11,53 +10,43 @@ import dao.ProductDao;
 import dao.ReceiptDao;
 import dao.ReceiptProductDao;
 import handler.CustomSQLException;
-import service.ClientService;
-import service.IClientService;
-import service.IProductService;
-import service.IReceiptProductService;
-import service.IReceiptService;
-import service.ProductService;
-import service.ReceiptProductService;
-import service.ReceiptService;
 
 public class PostgresServiceFactory extends ServiceFactory{
 	
-	private static Connection conn;
-	private IClientService clientService;
-	private IProductService productService;
-	private IReceiptService receiptService;
-	private IReceiptProductService receiptProductService;
+	private ClientDao clientDao;
+	private ProductDao productDao;
+	private ReceiptDao receiptDao;
+	private ReceiptProductDao receiptProductDao;
 	
 	protected PostgresServiceFactory() {
-		this.createConnection();
-		this.clientService = new ClientService(new ClientDao(conn));
-		this.productService = new ProductService(new ProductDao(conn));
-		this.receiptService = new ReceiptService(new ReceiptDao(conn));
-		this.receiptProductService = new ReceiptProductService(new ReceiptProductDao(conn));
+		this.clientDao = new ClientDao();
+		this.productDao = new ProductDao();
+		this.receiptDao = new ReceiptDao();
+		this.receiptProductDao = new ReceiptProductDao();
 	}
 
 	@Override
-	public IClientService getClientService() {
-		return this.clientService;
+	public ClientDao getClientDao() {
+		return this.clientDao;
 	}
 
 	@Override
-	public IProductService getProductService() {
-		return this.productService;
+	public ProductDao getProductDao() {
+		return this.productDao;
 	}
 
 	@Override
-	public IReceiptService getReceiptService() {
-		return this.receiptService;
+	public ReceiptDao getReceiptDao() {
+		return this.receiptDao;
 	}
 
 	@Override
-	public IReceiptProductService getReceiptProductService() {
-		return this.receiptProductService;
+	public ReceiptProductDao getReceiptProductDao() {
+		return this.receiptProductDao;
 	}
 	
 	public void createTable(String query) {
-		
+		Connection conn = ServiceFactory.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);
 		try {
 			PreparedStatement stmn = conn.prepareStatement(query);
 			if(!stmn.execute()) {
@@ -65,29 +54,6 @@ public class PostgresServiceFactory extends ServiceFactory{
 			}
 		} catch (SQLException e) {
 			CustomSQLException.handle(e, "createTable()");
-		}
-	}
-	
-	private Connection createConnection(){
-		if(conn == null) {
-			try {
-				conn = DriverManager.getConnection(Constants.POSTGRES_URL, Constants.POSTGRES_USERNAME, Constants.POSTGRES_PASSWORD);				
-			} catch(SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return conn;
-	}
-	
-	public static void closeConnection() {
-		if(conn != null) {
-			try {
-				if(!conn.isClosed()) {
-					conn.close();					
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 	}
 }

@@ -1,4 +1,6 @@
-package model;
+package dto;
+
+import entity.Client;
 
 public class ClientDTO extends Client {
 	

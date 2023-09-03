@@ -1,4 +1,4 @@
-package model;
+package dto;
 
 public class ProductDTO {
 	//rec.product_id, rec.name, SUM(rec.quantity) AS "Cantidad", pro.value "Valor"	//, (SUM(rec.quantity) * pro.value) AS "Valor total"

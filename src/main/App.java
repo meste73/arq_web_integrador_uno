@@ -1,7 +1,6 @@
 package main;
 
 import common.Queries;
-import factory.PostgresServiceFactory;
 import factory.ServiceFactory;
 
 public class App {
@@ -35,8 +34,11 @@ public class App {
 		ReceiptProductTest rePrTest = new ReceiptProductTest();
 		rePrTest.run();
 		
-		//Close db connection
-		PostgresServiceFactory.closeConnection();
+		clTest.printClientsOrderByReceiptQuantity();
+		prTest.printHigherMoneyCollectedProduct();
+		
+		ServiceFactory.closeConnection();
+
 	}
 	
 	private static void createTables(String[] queries) {
